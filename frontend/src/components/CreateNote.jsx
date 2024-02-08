@@ -22,13 +22,24 @@ const CreateNote = () => {
 
 
   useEffect(() => {
-    getUsers();
     if(id) {
       getUser(id);
       setEditing(true);
       setId(id);
+    } else {
+      setEditing(false);
+      setId('');
+      clearForm();
     }
-  }, []);
+    getUsers();
+  }, [id]);
+
+  const clearForm = () => {
+    setTitle('');
+    setContent('');
+    setDate(new Date());
+    setUserSelected('');
+  };
 
   const getUsers = async () => {
     const res = await axios.get('http://localhost:4000/api/users');

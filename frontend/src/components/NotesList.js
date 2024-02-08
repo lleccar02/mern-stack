@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { format } from 'timeago.js'
+import { Link } from 'react-router-dom';
 
 export default class NotesList extends Component {
 
@@ -31,7 +32,7 @@ export default class NotesList extends Component {
               <div className="card">
                 <div className="card-header d-flex justify-content-between">
                   <h5>{note.title}</h5>
-                  <a href={'/edit/' + note._id}>Edit</a>
+                  <Link className="nav-link" to={"/edit/" + note._id}>Edit</Link>
                 </div>
                 <div className="card-body">
                   <p>{note.content}</p>

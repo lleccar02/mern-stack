@@ -6,5 +6,5 @@ Ejercicio de React siguiente los videos de [Stack MERN](https://www.youtube.com/
 - [ ] Convertir los componentes de clase a componentes funcionales
     -  [x] CreateNote.js
     -  [x] CreateUser.js
-    -  [ ] Navigation.js
+    -  [x] Navigation.js
     -  [ ] NotesList.js

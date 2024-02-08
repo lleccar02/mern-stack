@@ -4,8 +4,6 @@ const URI = process.env.MONGODB_URI
   ? process.env.MONGODB_URI 
   : 'mongodb://localhost/mernstack';
 
-console.log(URI);
-
 mongoose.connect(URI, {
   retryWrites: true,
   w: 'majority',

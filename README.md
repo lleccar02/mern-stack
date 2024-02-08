@@ -12,3 +12,5 @@ Ejercicio de React siguiente los videos de [Stack MERN](https://www.youtube.com/
 - [ ] Completar las funcionales CRUD
     - [x] Notes
     - [ ] Users (Falta el update)
+
+- [ ] Subir imágenes

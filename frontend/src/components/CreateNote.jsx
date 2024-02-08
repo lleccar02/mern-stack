@@ -8,78 +8,63 @@ const CreateNote = () => {
 
   const id = useParams().id;
 
-  const title = id ? 'Edit Note' : 'Create Note';
+  const formTitle = id ? 'Edit Note' : 'Create Note';
 
   const navigate = useNavigate();
 
-  const [state, setState] = useState({
-    users: [],
-    userSelected: '',
-    date: new Date(),
-    title: '',
-    content: '',
-    editing: false,
-    _id: ''
-  });
+  const [users, setUsers] = useState([]);
+  const [userSelected, setUserSelected] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [editing, setEditing] = useState(false);
+  const [_id, setId] = useState('');
+
 
   useEffect(() => {
     getUsers();
     if(id) {
       getUser(id);
-      setState(prevState => ({
-        ...prevState,
-        editing: true,
-        _id: id
-      }));
+      setEditing(true);
+      setId(id);
     }
   }, []);
 
   const getUsers = async () => {
     const res = await axios.get('http://localhost:4000/api/users');
-    setState(prevState => ({
-      ...prevState,
-      users: res.data.users,
-      userSelected: res.data.users[0].username
-    }));
+    setUsers(res.data.users);
+    setUserSelected(res.data.users[0].username);
   };
 
   const getUser = async (id) => {
     const res = await axios.get(`http://localhost:4000/api/notes/${id}`);
-    setState(prevState => ({
-      ...prevState,
-      userSelected: res.data.note.author,
-      title: res.data.note.title,
-      content: res.data.note.content,
-      date: new Date(res.data.note.date),
-    }));
-    
+    setUserSelected(res.data.note.author);
+    setTitle(res.data.note.title);
+    setContent(res.data.note.content);
+    setDate(new Date(res.data.note.date));
   };
 
   const onInputChange = (e) => {
     const { name, value } = e.target;
-    setState(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    if (name === 'userSelected') setUserSelected(value);
+    if (name === 'title') setTitle(value);
+    if (name === 'content') setContent(value);
   };
 
   const onDateChange = date => {
-    setState(prevState => ({
-      ...prevState,
-      date
-    }));
+    setDate(date);
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     const note = {
-      author: state.userSelected,
-      title: state.title,
-      content: state.content,
-      date: state.date
+      author: userSelected,
+      title: title,
+      content: content,
+      date: date
     };
-    if (state.editing) {
-      await axios.put(`http://localhost:4000/api/notes/${state._id}`, note);
+    if (editing) {
+      await axios.put(`http://localhost:4000/api/notes/${_id}`, note);
     } else {
       await axios.post('http://localhost:4000/api/notes', note);
     }
@@ -89,12 +74,12 @@ const CreateNote = () => {
   return (
     <div className="col-md-6 offset-md-3">
       <div className="card card-body">
-        <h4>{title}</h4>
+        <h4>{formTitle}</h4>
         <br />
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <select name="userSelected" className="form-control" value={state.userSelected} onChange={onInputChange}>
-              {state.users.map(user =>
+            <select name="userSelected" className="form-control" value={userSelected} onChange={onInputChange}>
+              {users.map(user =>
                 <option key={user._id} value={user.username}>
                   {user.username}
                 </option>
@@ -104,21 +89,21 @@ const CreateNote = () => {
           <br />
 
           <div className="form-group">
-            <input type="text" className="form-control" placeholder="Title" name="title" value={state.title} onChange={onInputChange} required />
+            <input type="text" className="form-control" placeholder="Title" name="title" value={title} onChange={onInputChange} required />
           </div>
           <br />
 
           <div className="form-group">
-            <textarea className="form-control" placeholder="Content" name="content" value={state.content} onChange={onInputChange} required></textarea>
+            <textarea className="form-control" placeholder="Content" name="content" value={content} onChange={onInputChange} required></textarea>
           </div>
           <br />
 
           <div className="form-group">
             <DatePicker
               className="form-control"
-              selected={state.date}
+              selected={date}
               onChange={onDateChange}
-              value={state.date}
+              value={date}
             />
           </div>
           <br />

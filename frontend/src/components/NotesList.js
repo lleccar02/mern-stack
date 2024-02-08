@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { format } from 'timeago.js'
 import { Link } from 'react-router-dom';
+import TimeAgo from 'react-timeago'
 
 export default class NotesList extends Component {
 
@@ -37,7 +37,9 @@ export default class NotesList extends Component {
                 <div className="card-body">
                   <p>{note.content}</p>
                   <p>{note.author}</p>
-                  <p>{format(note.date)}</p>
+                  <p>
+                    <TimeAgo date={note.date} />
+                  </p>
                 </div>
                 <div className="card-footer">
                   <button className="btn btn-danger" onClick={() => this.deleteNote(note._id)}>

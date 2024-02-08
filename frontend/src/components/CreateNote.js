@@ -8,6 +8,8 @@ const CreateNote = () => {
 
   const id = useParams().id;
 
+  const title = id ? 'Edit Note' : 'Create Note';
+
   const navigate = useNavigate();
 
   const [state, setState] = useState({
@@ -87,7 +89,7 @@ const CreateNote = () => {
   return (
     <div className="col-md-6 offset-md-3">
       <div className="card card-body">
-        <h4>Create Note</h4>
+        <h4>{title}</h4>
         <br />
         <form onSubmit={onSubmit}>
           <div className="form-group">

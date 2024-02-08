@@ -8,3 +8,7 @@ Ejercicio de React siguiente los videos de [Stack MERN](https://www.youtube.com/
     -  [x] CreateUser.js
     -  [x] Navigation.js
     -  [x] NotesList.js
+
+- [ ] Completar las funcionales CRUD
+    - [x] Notes
+    - [ ] Users (Falta el update)

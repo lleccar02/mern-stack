@@ -22,6 +22,11 @@ const CreateNote = () => {
 
 
   useEffect(() => {
+    loadForm();
+  }, [id]);
+
+  const loadForm = async () => {
+    await getUsers();
     if(id) {
       getUser(id);
       setEditing(true);
@@ -31,8 +36,7 @@ const CreateNote = () => {
       setId('');
       clearForm();
     }
-    getUsers();
-  }, [id]);
+  };
 
   const clearForm = () => {
     setTitle('');
